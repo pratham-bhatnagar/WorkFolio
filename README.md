@@ -1,2 +1,3 @@
-# GatherProtocol
-Protocol over LUKSO to manage ticketing, attendance, swag distribution and POAPs for in-person or virtual events
+# LaunchPad
+LaunchPad helps your product crowdfund and create bounties to launch your product. 
+
