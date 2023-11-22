@@ -2,14 +2,31 @@ import { Inter } from "next/font/google";
 import Button from "../components/Button";
 import { GrTicket } from "react-icons/gr";
 import { FaPeopleGroup } from "react-icons/fa6";
+import { useConnectWallet } from "@web3-onboard/react";
+import { ethers } from "ethers";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  const [{ wallet, connecting }, connect, disconnect] = useConnectWallet();
+
+  // create an ethers provider
+  let ethersProvider;
+
+  if (wallet) {
+    ethersProvider = new ethers.providers.Web3Provider(wallet.provider, "any");
+  }
+
   return (
     <main
       className={`flex min-h-screen flex-col items-center  p-24 ${inter.className}`}
     >
+      <button
+        disabled={connecting}
+        onClick={() => (wallet ? disconnect(wallet) : connect())}
+      >
+        {connecting ? "Connecting" : wallet ? "Disconnect" : "Connect"}
+      </button>
       <div className="w-[50vw]  p-2 flex flex-col justify-center items-center mb-[5rem]">
         <span className=" text-neutral-700 font-semibold border border-brandGreen bg-brandGreen cursor-pointer rounded-full text-[12px] px-3">
           Check out our SDK to interact with Protocol Data or Verify POAPs.
