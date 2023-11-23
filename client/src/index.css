@@ -2,6 +2,45 @@
 @tailwind components;
 @tailwind utilities;
 
+/* assign the Cal Sans font-family */
+html,
+body {
+  font-family: "Cal Sans";
+}
+
+/* usage samples with adjusted letter spacings */
+.hero {
+  font-size: 56px;
+}
+.hero-2 {
+  font-size: 40px;
+  letter-spacing: 0.01em;
+}
+/* h1 {
+  font-size: 36px;
+  letter-spacing: 0.015em;
+}
+h2 {
+  font-size: 28px;
+  letter-spacing: 0.02em;
+}
+h3 {
+  font-size: 20px;
+  letter-spacing: 0.03em;
+}
+h4 {
+  font-size: 16px;
+  letter-spacing: 0.04em;
+} */
+.quote {
+  font-size: 24px;
+  letter-spacing: 0.02em;
+}
+.smaller_cal_sans {
+  font-size: 18px;
+  letter-spacing: 0.045em;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

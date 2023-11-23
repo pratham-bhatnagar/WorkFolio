@@ -1,7 +1,10 @@
-function Nav() {
+import { IoWallet } from "react-icons/io5";
+import Button from "./Button";
+import { NavigationMenu } from "./ui/navigation-menu";
+function Nav(props: any) {
   return (
-    <header className="header border-b-[1px] border-slate-700" data-header>
-      <div className="container max-h-[25px]">
+    <header className="absolute top-0 w-[100vw] h-[64px] px-[100px] flex flex-row items-center justify-between  text-white border-b-[1px] border-slate-700 z-50">
+      <div className="flex">
         <a href="/#">
           {" "}
           <img
@@ -11,34 +14,29 @@ function Nav() {
             className="mr-[10px] h-[30px] sm:visible"
           />{" "}
         </a>
-        <h1 className=" gradient marginlogo text-xxl text-brandGreen font-semibold">
+        <h1 className=" gradient marginlogo text-2xl text-brandGreen font-semibold">
           LaunchPad
-        </h1>
-
-        <nav className="navbar" data-navbar>
-          <ul className="navbar-list">
-            {/* {isConnected && ( */}
-            <li>
-              <a
-                href="/dashboard"
-                className="navbar-link label-lg link:hover cursor-pointer"
-              >
-                Dashboard
-              </a>
-            </li>
-            {/* )} */}
-
-            <li>
-              <a
-                href="/host"
-                className="navbar-link label-lg link:hover cursor-pointer"
-              >
-                Host
-              </a>
-            </li>
-          </ul>
-        </nav>
+        </h1>{" "}
       </div>
+      <NavigationMenu />
+
+      <Button
+        type="button"
+        mode="green"
+        disabled={props.connecting}
+        onClick={props.connectWalletOnClick}
+      >
+        <div className="flex flex-row gap-[10px] items-center ">
+          <IoWallet className="text-brandGrey h-[16px]" height={16} />{" "}
+          <p className="text-brandGrey font-semibold ">
+            {props.connecting
+              ? "Connecting"
+              : props.wallet
+              ? "Disconnect"
+              : "Connect"}
+          </p>
+        </div>
+      </Button>
     </header>
   );
 }

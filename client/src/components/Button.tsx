@@ -7,6 +7,7 @@ type IProps = {
   children: JSX.Element | string;
   className?: string;
   small?: boolean;
+  disabled?: boolean;
 };
 
 const Button: React.FC<IProps> = (props) => {
@@ -21,6 +22,7 @@ const Button: React.FC<IProps> = (props) => {
   return (
     <>
       <button
+        disabled={props.disabled}
         className={`${STYLES} ${SIZE} rounded-[4px] shadow-sm ${props.className}`}
         type={props.type}
       >

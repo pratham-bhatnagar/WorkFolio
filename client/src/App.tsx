@@ -1,4 +1,5 @@
 import React from "react";
+import "cal-sans";
 import { Route } from "wouter";
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
@@ -11,14 +12,12 @@ function App() {
   return (
     <div className="App">
       <Web3OnboardProvider web3Onboard={web3Onboard}>
-        <Navbar />
-        <button
-          disabled={connecting}
-          className="mt-[50px bg-brandGreen text-white"
-          onClick={() => (wallet ? disconnect(wallet) : connect())}
-        >
-          {connecting ? "Connecting" : wallet ? "Disconnect" : "Connect"}
-        </button>
+        <Navbar
+          connecting={connecting}
+          wallet={wallet}
+          connectWalletOnClick={() => (wallet ? disconnect(wallet) : connect())}
+        />
+
         <div>
           <Route path="/">
             <Home />
