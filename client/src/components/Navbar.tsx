@@ -2,7 +2,6 @@ import { IoWallet } from "react-icons/io5";
 import Button from "./Button";
 import { NavigationMenu } from "./ui/navigation-menu";
 function Nav(props: any) {
-  console.log(props.connectWalletOnClick);
   return (
     <header className="absolute top-0 w-[100vw] h-[64px] px-[100px] flex flex-row items-center justify-between  text-white border-b-[1px] border-slate-700 z-50">
       <div className="flex">
