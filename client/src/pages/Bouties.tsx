@@ -7,6 +7,7 @@ import { GrMoney } from "react-icons/gr";
 import CreateBounty from "../components/CreateBounty";
 import Avvvatars from "avvvatars-react";
 import supabase from "../services/supabase";
+import { Link } from "wouter";
 
 function BountiesPage() {
   const [bountyModal, setBountyModal] = useState(false);
@@ -73,56 +74,58 @@ function BountiesPage() {
 const BountyCard = (props: any) => {
   const { bounty } = props;
   return (
-    <div className=" bg-transparent border rounded border-brandGrey p-4 flex justify-between items-center">
-      <div className="flex items-center">
-        <img
-          className="h-12 w-12"
-          src={bounty.imageBase64}
-          alt="SEO Optimization"
-        />
-        <div className="ml-4">
-          <h3 className="font-semibold text-white">{bounty.title}</h3>
-          <p className="text-gray-500">Project | Rolling Deadline</p>
+    <Link href={`/bounty/${bounty.id}`}>
+      <div className=" bg-transparent border rounded border-brandGrey p-4 flex justify-between items-center cursor-pointer">
+        <div className="flex items-center">
+          <img
+            className="h-12 w-12"
+            src={bounty.imageBase64}
+            alt="SEO Optimization"
+          />
+          <div className="ml-4">
+            <h3 className="font-semibold text-white">{bounty.title}</h3>
+            <p className="text-gray-500">Project | Rolling Deadline</p>
+          </div>
         </div>
+        <div className="text-white">
+          {!bounty.applicants.length ? (
+            "No applicants"
+          ) : (
+            <>
+              {" "}
+              {bounty.applicants.length > 1 ? (
+                <>
+                  <span className="flex gap-1 items-center">
+                    <div className="flex items-center -space-x-2 pointer-events-none">
+                      <Avvvatars
+                        value={`${bounty.applicants?.[0]}random`}
+                        style={"shape"}
+                        size={25}
+                      />{" "}
+                      <Avvvatars
+                        value={`${bounty.applicants?.[0]}addr`}
+                        style={"shape"}
+                        size={25}
+                      />
+                      <a
+                        className="flex items-center justify-center w-[30px] h-[30px] text-lg font-medium text-white bg-brandGreen rounded-full "
+                        href="#"
+                      >
+                        {bounty.applicants.length + 1}
+                      </a>
+                    </div>{" "}
+                    Submissions
+                  </span>
+                </>
+              ) : (
+                "1 Submission"
+              )}
+            </>
+          )}
+        </div>
+        <span className="font-bold text-green-500">{bounty.prize} LYX</span>
       </div>
-      <div className="text-white">
-        {!bounty.applicants.length ? (
-          "No applicants"
-        ) : (
-          <>
-            {" "}
-            {bounty.applicants.length > 1 ? (
-              <>
-                <span className="flex gap-1 items-center">
-                  <div className="flex items-center -space-x-2 pointer-events-none">
-                    <Avvvatars
-                      value={`${bounty.applicants?.[0]}random`}
-                      style={"shape"}
-                      size={25}
-                    />{" "}
-                    <Avvvatars
-                      value={`${bounty.applicants?.[0]}addr`}
-                      style={"shape"}
-                      size={25}
-                    />
-                    <a
-                      className="flex items-center justify-center w-[30px] h-[30px] text-lg font-medium text-white bg-brandGreen rounded-full "
-                      href="#"
-                    >
-                      {bounty.applicants.length + 1}
-                    </a>
-                  </div>{" "}
-                  Submissions
-                </span>
-              </>
-            ) : (
-              "1 Submission"
-            )}
-          </>
-        )}
-      </div>
-      <span className="font-bold text-green-500">{bounty.prize} LYX</span>
-    </div>
+    </Link>
   );
 };
 

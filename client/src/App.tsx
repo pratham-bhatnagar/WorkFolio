@@ -8,6 +8,7 @@ import { useConnectWallet } from "@web3-onboard/react";
 import { ethers } from "ethers";
 import Bouties from "./pages/Bouties";
 import { Toaster } from "react-hot-toast";
+import Bounty from "./pages/Bounty";
 
 function App() {
   const [{ wallet, connecting }, connect, disconnect] = useConnectWallet();
@@ -45,6 +46,9 @@ function App() {
         </Route>
         <Route path="/bounty">
           <Bouties />
+        </Route>
+        <Route path="/bounty/:id">
+          <Bounty />
         </Route>
       </div>
     </div>
