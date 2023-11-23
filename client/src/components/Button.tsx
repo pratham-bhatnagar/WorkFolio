@@ -25,6 +25,7 @@ const Button: React.FC<IProps> = (props) => {
         disabled={props.disabled}
         className={`${STYLES} ${SIZE} rounded-[4px] shadow-sm ${props.className}`}
         type={props.type}
+        onClick={props.onClick}
       >
         {props.children}
       </button>
