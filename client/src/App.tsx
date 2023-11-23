@@ -6,7 +6,8 @@ import Home from "./pages/Home";
 
 import { useConnectWallet } from "@web3-onboard/react";
 import { ethers } from "ethers";
-import Web3 from "web3";
+import Bouties from "./pages/Bouties";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const [{ wallet, connecting }, connect, disconnect] = useConnectWallet();
@@ -29,7 +30,8 @@ function App() {
   };
 
   return (
-    <div className="App">
+    <div className="App dark">
+      <Toaster />
       <Navbar
         connecting={connecting}
         wallet={wallet}
@@ -37,9 +39,12 @@ function App() {
       />
 
       <div>
+        <h1 className="mt-[80px]">{account}</h1>
         <Route path="/">
-          <h1 className="mt-[80px]">{account}</h1>
           <Home />
+        </Route>
+        <Route path="/bounty">
+          <Bouties />
         </Route>
       </div>
     </div>
