@@ -27,7 +27,7 @@ function Nav(props: any) {
             className="mr-[10px] h-[30px] sm:visible"
           />{" "}
         </a>
-        <h1 className=" gradient marginlogo text-2xl text-brandGreen font-semibold">
+        <h1 className=" gradient marginlogo text-2xl text-brandGreen font-semibold cal-font">
           LaunchPad
         </h1>{" "}
       </div>
@@ -35,18 +35,18 @@ function Nav(props: any) {
       <div className=""></div>
       <ul className="flex gap-10">
         <ActiveLink href="/bounty">
-          <li className="cursor-pointer hover:text-brandGreen flex gap-2 text-lg items-center">
+          <li className="cursor-pointer hover:text-brandGreen flex gap-2 text-lg cal-font items-center">
             <GrMoney /> Bounties
           </li>
         </ActiveLink>
         <ActiveLink href="/pow">
-          <li className="cursor-pointer hover:text-brandGreen flex gap-2 text-lg items-center">
+          <li className="cursor-pointer hover:text-brandGreen flex gap-2 text-lg cal-font items-center">
             <MdWorkspacePremium /> Proof Of Work
           </li>
         </ActiveLink>
         {!props.wallet && (
           <ActiveLink href={`/pow/profile-address-here`}>
-            <li className="cursor-pointer hover:text-brandGreen flex gap-2 text-lg items-center">
+            <li className="cursor-pointer hover:text-brandGreen flex gap-2 text-lg cal-font items-center">
               <CgProfile /> Your POW Profile
             </li>
           </ActiveLink>
@@ -60,7 +60,7 @@ function Nav(props: any) {
       >
         <div className="flex flex-row gap-[10px] items-center ">
           <IoWallet className="text-brandGrey h-[16px]" height={16} />{" "}
-          <p className="text-brandGrey font-semibold ">
+          <p className="text-brandGrey font-semibold cal-font">
             {props.connecting
               ? "Connecting"
               : props.wallet

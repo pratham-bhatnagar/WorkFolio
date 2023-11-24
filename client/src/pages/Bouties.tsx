@@ -34,14 +34,14 @@ function BountiesPage() {
       )}
       <div className="flex flex-row justify-between">
         <div className="">
-          <h1 className="flex  items-center text-brandGreen text-2xl gap-3">
+          <h1 className="text-brandGreen cal-font flex items-center gap-3 text-2xl">
             {" "}
             <GrMoney /> <span className="text-[#EDEDED]">Bounties</span>
           </h1>
-          <h2 className="text-gray-400">
+          <p className="cal-font text-gray-400">
             Apply to a bounty using your Universal profile based Proof Of Work
             profile, to earn money and enhance POW.
-          </h2>
+          </p>
         </div>
         <div className="flex items-center justify-center">
           <Button
@@ -51,7 +51,7 @@ function BountiesPage() {
           >
             <div className="flex flex-row gap-[10px] items-center text-brandGrey">
               <FaCirclePlus />
-              <p className=" font-semibold ">Create Bounty</p>
+              <p className=" cal-font font-semibold">Create Bounty</p>
             </div>
           </Button>
         </div>
@@ -75,15 +75,17 @@ const BountyCard = (props: any) => {
   const { bounty } = props;
   return (
     <Link href={`/bounty/${bounty.id}`}>
-      <div className=" bg-transparent border rounded border-brandGrey p-4 flex justify-between items-center cursor-pointer">
+      <div className=" border-brandGrey flex items-center justify-between p-4 bg-transparent border rounded cursor-pointer">
         <div className="flex items-center">
           <img
-            className="h-12 w-12"
+            className="w-12 h-12"
             src={bounty.imageBase64}
             alt="SEO Optimization"
           />
           <div className="ml-4">
-            <h3 className="font-semibold text-white">{bounty.title}</h3>
+            <h3 className="cal-font font-semibold text-white">
+              {bounty.title}
+            </h3>
             <p className="text-gray-500">Project | Rolling Deadline</p>
           </div>
         </div>
@@ -95,7 +97,7 @@ const BountyCard = (props: any) => {
               {" "}
               {bounty.applicants.length > 1 ? (
                 <>
-                  <span className="flex gap-1 items-center">
+                  <span className="flex items-center gap-1">
                     <div className="flex items-center -space-x-2 pointer-events-none">
                       <Avvvatars
                         value={`${bounty.applicants?.[0]}random`}
@@ -123,7 +125,7 @@ const BountyCard = (props: any) => {
             </>
           )}
         </div>
-        <span className="font-bold text-green-500">{bounty.prize} LYX</span>
+        <span className="font-bold text-brandGreen">{bounty.prize} LYX</span>
       </div>
     </Link>
   );
