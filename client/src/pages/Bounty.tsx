@@ -44,20 +44,24 @@ function Bounty() {
         </h1>
       ) : (
         <>
-          <div className="flex flex-row items-center gap-4 mx-4 border-b-[1px] border-gray-700 p-3">
-            <img
-              src={bounty.imageBase64}
-              alt=""
-              height={20}
-              className="h-[50px]"
-            />{" "}
-            <div className="flex flex-col">
-              <h1 className=" text-[40px]">{bounty.title}</h1>
-              <p className="roboto font-semibold text-gray-500">
-                by {bounty.creator}
-              </p>
+          <div className="flex flex-row justify-between items-center gap-4 mx-4 border-b-[1px] border-gray-700 p-3">
+            <div className="flex flex-row gap-4 items-center">
+              <img
+                src={bounty.imageBase64}
+                alt=""
+                height={20}
+                className="h-[50px]"
+              />{" "}
+              <div className="flex flex-col">
+                <h1 className=" text-[40px]">{bounty.title}</h1>
+                <p className="roboto font-semibold text-gray-500">
+                  by {bounty.creator}
+                </p>
+              </div>
             </div>
-            <div className="text-brandGreen">{bounty?.prize}</div>
+            <div className=" border-brandGreen text-2xl text-brandGreen rounded-full flex items-center justify-center">
+              {bounty?.prize} LYX
+            </div>
           </div>
 
           <div className=" mt-2 mx-4 max-h-[50vh] overflow-y-scroll border-b-[1px] border-gray-700 pb-4">
