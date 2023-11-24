@@ -110,7 +110,7 @@ function Bounty() {
               {bounty.descriptionMarkdown}
             </ReactMarkdown>
           </div>
-
+          {/* todo if winner address is user address show claim otherwise just show winners */}
           {!bounty?.winner ? (
             <div className="winner w-[30vw] mx-auto my-3 p-5 rounded-3xl">
               <h1 className="font-bold text-zinc-800 text-2xl  ">
