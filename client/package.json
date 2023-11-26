@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@erc725/erc725.js": "^0.21.2",
     "@lukso/lsp-smart-contracts": "^0.12.1",
     "@lukso/web3-onboard-config": "^1.0.3",
     "@noble/curves": "^1.2.0",

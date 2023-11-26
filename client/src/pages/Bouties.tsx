@@ -9,7 +9,7 @@ import Avvvatars from "avvvatars-react";
 import supabase from "../services/supabase";
 import { Link } from "wouter";
 
-function BountiesPage() {
+function BountiesPage(props: any) {
   const [bountyModal, setBountyModal] = useState(false);
   const [bounties, setBounties] = useState([]);
   const fetchBounties = async () => {

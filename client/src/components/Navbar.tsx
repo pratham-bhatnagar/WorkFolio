@@ -4,6 +4,7 @@ import { GrMoney } from "react-icons/gr";
 import { MdWorkspacePremium } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
 import { Link, useRoute } from "wouter";
+import { ProfilePic } from "./ProfilePic";
 
 export const ActiveLink = (props: any) => {
   const [isActive] = useRoute(props.href);
@@ -33,7 +34,7 @@ function Nav(props: any) {
       </div>
       <div className=""></div>
       <div className=""></div>
-      <ul className="flex gap-10">
+      <ul className="flex gap-10 items-center">
         <ActiveLink href="/bounty">
           <li className="cursor-pointer hover:text-brandGreen flex gap-2 text-lg cal-font items-center">
             <GrMoney /> Bounties
@@ -44,10 +45,14 @@ function Nav(props: any) {
             <MdWorkspacePremium /> Proof Of Work
           </li>
         </ActiveLink>
-        {!props.wallet && (
-          <ActiveLink href={`/pow/profile-address-here`}>
-            <li className="cursor-pointer hover:text-brandGreen flex gap-2 text-lg cal-font items-center">
-              <CgProfile /> Your POW Profile
+        {props.UP && (
+          <ActiveLink href={`/pow/${props.address}`}>
+            <li className="cursor-pointer hover:text-brandGreen flex gap-3 text-lg cal-font items-center">
+              <ProfilePic
+                UP={props.UP}
+                className={"rounded-full h-[20px] w-[20px]"}
+              />
+              {props.UP?.name}'s POW
             </li>
           </ActiveLink>
         )}

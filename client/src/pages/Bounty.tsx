@@ -20,7 +20,7 @@ import React from "react";
 // winner: null,
 // imageBase64: Base64Image,
 
-function Bounty() {
+function Bounty(props: any) {
   const [match, params] = useRoute("/bounty/:id");
   const [bounty, setBounty] = useState<any>(null);
   const fetchbounty = async () => {

@@ -2,7 +2,7 @@ import Button from "../components/Button";
 import { GrTicket } from "react-icons/gr";
 import { FaPeopleGroup } from "react-icons/fa6";
 
-export default function Home() {
+export default function Home(props: any) {
   return (
     <main className={`flex min-h-screen flex-col items-center  p-24 `}>
       <div className="w-[50vw]  p-2 flex flex-col justify-center items-center mb-[5rem]">
