@@ -1,6 +1,5 @@
 import "cal-sans";
 import { useEffect, useState } from "react";
-
 import { ERC725, ERC725JSONSchema } from "@erc725/erc725.js";
 import lsp3ProfileSchema from "@erc725/erc725.js/schemas/LSP3ProfileMetadata.json";
 import { useConnectWallet } from "@web3-onboard/react";
@@ -16,7 +15,7 @@ import Bounty from "./pages/Bounty";
 import { Buffer } from "buffer";
 import Avvvatars from "avvvatars-react";
 import POW from "./pages/POW";
-
+import { uploadData } from "./lib/lukso";
 // @ts-ignore
 window.Buffer = Buffer;
 
@@ -30,6 +29,7 @@ function App() {
   }
   useEffect(() => {
     getUP();
+    uploadData();
   }, [wallet]);
 
   const getUP = async () => {
@@ -70,6 +70,7 @@ function App() {
       />
 
       <div className="mt-[80px]">
+        <h1 className="mt-8 text-white">{address}</h1>
         <Route path="/">
           <Home UP={UP} />
         </Route>
