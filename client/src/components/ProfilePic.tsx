@@ -12,10 +12,14 @@ export const ProfilePic = (props: any) => {
             props.UP?.profileImage[0].url
           )}`}
           className={props.className}
+          height={props?.size}
+          width={props?.size}
           alt=""
         />
       ) : (
-        <Avvvatars value={`${props.UP?.name}`} />
+        <div className={props.className}>
+          <Avvvatars value={`${props.UP?.name}`} size={props.size} />
+        </div>
       )}
     </>
   );

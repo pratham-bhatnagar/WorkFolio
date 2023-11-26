@@ -15,6 +15,7 @@ import Bounty from "./pages/Bounty";
 
 import { Buffer } from "buffer";
 import Avvvatars from "avvvatars-react";
+import POW from "./pages/POW";
 
 // @ts-ignore
 window.Buffer = Buffer;
@@ -77,6 +78,10 @@ function App() {
         </Route>
         <Route path="/bounty/:id">
           <Bounty UP={UP} />
+        </Route>
+
+        <Route path="/pow/:id">
+          <POW />
         </Route>
       </div>
     </div>
