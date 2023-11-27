@@ -4,22 +4,21 @@ import { ERC725, ERC725JSONSchema } from "@erc725/erc725.js";
 import lsp3ProfileSchema from "@erc725/erc725.js/schemas/LSP3ProfileMetadata.json";
 import { useConnectWallet } from "@web3-onboard/react";
 import { ethers } from "ethers";
-
 import { Route } from "wouter";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Bouties from "./pages/Bouties";
 import { Toaster } from "react-hot-toast";
 import Bounty from "./pages/Bounty";
-
 import { Buffer } from "buffer";
-import Avvvatars from "avvvatars-react";
 import POW from "./pages/POW";
-
+import { CreateBounty, uploadData,ClaimWinnerNFT } from "./lib/lukso";
 // @ts-ignore
 window.Buffer = Buffer;
 
+
 function App() {
+  const [loading, setLoading] = useState(false);
   const [{ wallet, connecting }, connect, disconnect] = useConnectWallet();
   const [UP, setUP] = useState<any | null>(null);
   const [address, setAddress] = useState();
@@ -29,7 +28,6 @@ function App() {
   }
   useEffect(() => {
     getUP();
-    // uploadData();
   }, [wallet]);
 
   const getUP = async () => {
@@ -70,6 +68,42 @@ function App() {
       />
 
       <div className="mt-[80px]">
+
+        <div className="flex gap-4">
+        <button
+          onClick={() => {
+            console.log('here')
+            setLoading(true);
+            CreateBounty(wallet,"Make OF video","make a OF video everyday");
+            setLoading(false);
+          }}
+        >
+          {loading ? "loading.." : "Create Bounty"}
+        </button>
+
+        <button 
+          onClick={() => {
+            console.log('here')
+            setLoading(true);
+            uploadData("pratham-bhatnagar",wallet)
+            setLoading(false);
+          }}
+        >
+          {loading ? "loading.." : "setgithub"}
+        </button>
+
+        <button
+          onClick={() => {
+            console.log('here')
+            setLoading(true);
+            ClaimWinnerNFT(wallet,"Winner of Clit Slitter")
+            setLoading(false);
+          }}
+        >
+          {loading ? "loading.." : "claim winner nft"}
+        </button>
+
+        </div>
         <h1 className="mt-8 text-white">{address}</h1>
         <Route path="/">
           <Home UP={UP} />

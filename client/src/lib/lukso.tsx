@@ -1,35 +1,17 @@
 import { ERC725, ERC725JSONSchema } from "@erc725/erc725.js";
 import lsp3ProfileSchema from "@erc725/erc725.js/schemas/LSP3ProfileMetadata.json";
 import { removeIpfsPrefix } from "./utils";
-// import { UploadOptions } from "@lukso/lsp-factory.js/build/main/src/lib/interfaces/profile-upload-options";
-// import { hexlify, keccak256 } from "ethers";
-// import { ProfileDataForEncoding } from "@lukso/lsp-factory.js/build/main/src/lib/interfaces/lsp3-profile";
-// import {
-//   DeployedUniversalProfileContracts,
-//   LSPFactory,
-//   ContractDeploymentOptions,
-//   ProfileDataBeforeUpload,
-//   ProfileDeploymentOptions,
-// } from "@lukso/lsp-factory.js";
-
+import { LSPFactory, ProfileDataBeforeUpload } from "@lukso/lsp-factory.js";
+import { LSP8IdentifiableDigitalAssetDeploymentOptions } from "@lukso/lsp-factory.js/build/main/src/lib/interfaces/digital-asset-deployment";
 import UniversalProfile from "@lukso/lsp-smart-contracts/artifacts/UniversalProfile.json";
-import Web3 from "web3";
+import Web3, { EIP1193Provider } from "web3";
 
-// export const DEFAULT_GAS = "5_000_000";
-// export const DEFAULT_GAS_PRICE = "10000000000";
-// //@ts-ignore
-// const web3 = new Web3(window.lukso);
-// const provider = "https://rpc.testnet.lukso.network";
+export const DEFAULT_GAS = "500_000";
+export const DEFAULT_GAS_PRICE = "10000000000";
 
-// const lspFactory = new LSPFactory("https://rpc.testnet.lukso.network", {
-//   chainId: 4201, // Chain Id of the network you want to deploy to
-// });
-
-// let profileData: ProfileDataBeforeUpload = {
-//   name: "",
-//   description: "",
-//   links: [{ title: "Twiiter", url: "www.twitter.com/prrthamm" }],
-// };
+//@ts-ignore
+const web3 = new Web3(window.lukso);
+const provider = "https://rpc.testnet.lukso.network";
 
 export const getUP = async (address: any) => {
   const erc725js = new ERC725(
@@ -41,89 +23,138 @@ export const getUP = async (address: any) => {
       ipfsGateway: "https://api.universalprofile.cloud/ipfs",
     }
   );
+
+  const profileMetaData = await erc725js.fetchData("LSP3Profile");
+  //@ts-ignore
+  return profileMetaData.value?.LSP3Profile;
 };
+
 export const getIPFSPublic = (ipfs: any) => {
   return `https://api.universalprofile.cloud/ipfs/${removeIpfsPrefix(ipfs)}`;
 };
 
-//   const profileMetaData = await erc725js.fetchData("LSP3Profile");
-//   //@ts-ignore
-//   return profileMetaData.value?.LSP3Profile;
-// };
+export const uploadData = async (github: string, wallet: any) => {
+  const lspFactory = new LSPFactory(
+    wallet?.provider as EIP1193Provider<"https://rpc.testnet.lukso.network">,
+    {
+      chainId: 4201, // Chain Id of the network you want to deploy to
+    }
+  );
 
-// const uploadUniversalProfileMetaData = async (
-//   profileData: ProfileDataBeforeUpload,
-//   uploadOptions?: UploadOptions
-// ): Promise<ProfileDataForEncoding> => {
-//   return await lspFactory.UniversalProfile.uploadProfileData(
-//     profileData,
-//     uploadOptions
-//   );
-// };
+  let profileData: ProfileDataBeforeUpload = {
+    name: "",
+    description: "",
+    links: [{ title: "github", url: `www.github.com/${github}` }],
+  };
+  const uploadResult = await lspFactory.UniversalProfile.uploadProfileData(
+    profileData
+  );
+  const lsp3ProfileIPFSUrl = uploadResult.url;
+  console.log(lsp3ProfileIPFSUrl);
 
-// export const uploadData = async () => {
-//   const uploadResult = await lspFactory.UniversalProfile.uploadProfileData(
-//     profileData
-//   );
-//   const lsp3ProfileIPFSUrl = uploadResult.url;
-//   const jsonfile = uploadResult.json;
-//   console.log({ sss: uploadResult.json.LSP3Profile });
-//   console.log(lsp3ProfileIPFSUrl);
+  const schema: ERC725JSONSchema = {
+    name: "LSP3Profile",
+    key: "0x5ef83ad9559033e6e941db7d7c495acdce616347d28e90c7ce47cbfcfcad3bc5",
+    keyType: "Singleton",
+    valueContent: "JSONURL",
+    valueType: "bytes",
+  };
 
-//   // console.log(uploadResult)
+  const erc725 = new ERC725([schema], wallet?.accounts[0].address, provider, {
+    ipfsGateway: "https://api.universalprofile.cloud/ipfs",
+  });
 
-//   const schema: ERC725JSONSchema = {
-//     name: "LSP3Profile",
-//     key: "0x5ef83ad9559033e6e941db7d7c495acdce616347d28e90c7ce47cbfcfcad3bc5",
-//     keyType: "Singleton",
-//     valueContent: "JSONURL",
-//     valueType: "bytes",
-//   };
+  const data = erc725.encodeData([
+    {
+      keyName: "LSP3Profile",
+      value: {
+        verification: {
+          method: "keccak256(utf8)",
+          data: Web3.utils.keccak256(JSON.stringify(uploadResult.json)),
+        },
 
-//   const erc725 = new ERC725(
-//     [schema],
-//     "0x01cAbA23321325b4AdC62b37194cB3d367d8D5b5",
-//     provider,
-//     {
-//       ipfsGateway: "https://api.universalprofile.cloud/ipfs",
-//     }
-//   );
+        url: lsp3ProfileIPFSUrl,
+      },
+    },
+  ]);
 
-//   const daata = erc725.encodeData([
-//     {
-//       keyName: "LSP3Profile",
-//       value: {
-//         verification: {
-//           method: "keccak256(utf8)",
-//           data: Web3.utils.keccak256(JSON.stringify(uploadResult.json)),
-//         },
+  const universalProfileContract = new web3.eth.Contract(
+    UniversalProfile.abi,
+    wallet?.accounts[0].address,
+    {
+      gas: DEFAULT_GAS,
+      gasPrice: DEFAULT_GAS_PRICE,
+    }
+  );
 
-//         url: lsp3ProfileIPFSUrl,
-//       },
-//     },
-//   ]);
+  console.log(data);
+  console.log({ key: data.keys[0], val: data.values[0] });
 
-//   const universalProfileContract = new web3.eth.Contract(
-//     UniversalProfile.abi,
-//     "0xD6b692649B492Cf127Dd9a9B9b0b347B0c66BbDd",
-//     {
-//       gas: DEFAULT_GAS,
-//       gasPrice: DEFAULT_GAS_PRICE,
-//     }
-//   );
+  await universalProfileContract.methods
+    //@ts-ignore
+    .setDataBatch([ERC725.encodeKeyName("github")], [data.values[0]])
+    // my universal ID
+    .send({ from: wallet?.accounts[0].address })
+    .on("receipt", function (receipt: any) {
+      console.log(receipt);
+    })
+    .once("sending", (payload: any) => {
+      console.log(JSON.stringify(payload, null, 2));
+    });
+};
 
-//   console.log(daata);
-//   console.log({ key: daata.keys[0], val: daata.values[0] });
+export const CreateBounty = async (
+  wallet: any,
+  title: string,
+  desc: string
+) => {
+  const lspFactory = new LSPFactory(
+    wallet?.provider as EIP1193Provider<"https://rpc.testnet.lukso.network">,
+    {
+      chainId: 4201, // Chain Id of the network you want to deploy to
+    }
+  );
 
-//   await universalProfileContract.methods
-//     //@ts-ignore
-//     .setDataBatch([daata.keys[0]], [daata.values[0]])
-//     // my universal ID
-//     .send({ from: "0xD6b692649B492Cf127Dd9a9B9b0b347B0c66BbDd" })
-//     .on("receipt", function (receipt: any) {
-//       console.log(receipt);
-//     })
-//     .once("sending", (payload: any) => {
-//       console.log(JSON.stringify(payload, null, 2));
-//     });
-// };
+  const digitalAssetData: LSP8IdentifiableDigitalAssetDeploymentOptions = {
+    controllerAddress: wallet?.accounts[0].address,
+    name: desc,
+    symbol: `${title}`,
+    creators: [wallet?.accounts[0].address],
+    tokenIdType: "",
+  };
+  try {
+    const deployedAsset = await lspFactory.LSP8IdentifiableDigitalAsset.deploy(
+      digitalAssetData
+    );
+
+    console.log("Deployed asset", deployedAsset.LSP8IdentifiableDigitalAsset);
+  } catch (err) {
+    console.log("====> Error", err);
+  }
+};
+
+export const ClaimWinnerNFT = async (wallet: any, title: string) => {
+  const lspFactory = new LSPFactory(
+    wallet?.provider as EIP1193Provider<"https://rpc.testnet.lukso.network">,
+    {
+      chainId: 4201,
+    }
+  );
+
+  const digitalAssetData: LSP8IdentifiableDigitalAssetDeploymentOptions = {
+    controllerAddress: wallet?.accounts[0].address,
+    name: title,
+    symbol: `Winner NFT`,
+    creators: [wallet?.accounts[0].address],
+    tokenIdType: "",
+  };
+  try {
+    const deployedAsset = await lspFactory.LSP8IdentifiableDigitalAsset.deploy(
+      digitalAssetData
+    );
+
+    console.log("Deployed asset", deployedAsset.LSP8IdentifiableDigitalAsset);
+  } catch (err) {
+    console.log("====> Error", err);
+  }
+};

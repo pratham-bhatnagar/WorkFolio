@@ -1,4 +1,10 @@
-import { ethers } from "hardhat";
+import { ethers } from 'hardhat';
+import * as dotenv from 'dotenv';
+import { abi as UP_ABI } from '@lukso/lsp-smart-contracts/artifacts/UniversalProfile.json';
+
+// load env vars
+dotenv.config();
+
 
 async function main() {
   const currentTimestampInSeconds = Math.round(Date.now() / 1000);
