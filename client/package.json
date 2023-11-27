@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@erc725/erc725.js": "^0.21.2",
+    "@lukso/lsp-factory.js": "^3.1.1",
     "@lukso/lsp-smart-contracts": "^0.12.1",
     "@lukso/web3-onboard-config": "^1.0.3",
     "@noble/curves": "^1.2.0",
@@ -24,6 +25,7 @@
     "@web3-onboard/react": "^2.8.13",
     "assert": "^2.1.0",
     "avvvatars-react": "^0.4.2",
+    "bn.js": "^5.2.1",
     "browserify-zlib": "^0.2.0",
     "cal-sans": "^1.0.1",
     "class-variance-authority": "^0.7.0",
@@ -46,6 +48,7 @@
     "tailwind-merge": "^2.0.0",
     "tailwindcss-animate": "^1.0.7",
     "typescript": "^4.9.5",
+    "url": "^0.11.3",
     "web-vitals": "^2.1.4",
     "web3": "^4.2.2",
     "wouter": "^2.12.1"
