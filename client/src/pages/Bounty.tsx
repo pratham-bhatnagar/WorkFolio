@@ -9,6 +9,7 @@ import { GiReceiveMoney } from "react-icons/gi";
 import { FaUserPlus } from "react-icons/fa6";
 import MDEditor from "@uiw/react-md-editor";
 import React from "react";
+import { getBounties } from "../lib/utils";
 
 // title,
 // prize,
@@ -24,11 +25,7 @@ function Bounty(props: any) {
   const [match, params] = useRoute("/bounty/:id");
   const [bounty, setBounty] = useState<any>(null);
   const fetchbounty = async () => {
-    const { data, error } = await supabase
-      .from("Bounties")
-      .select("*")
-      .eq("id", params!.id);
-    console.log({ error, data });
+    const data = await getBounties(params!.id);
     setBounty(data?.[0]);
   };
   useEffect(() => {

@@ -15,6 +15,8 @@ import Bounty from "./pages/Bounty";
 import { Buffer } from "buffer";
 import Avvvatars from "avvvatars-react";
 import POW from "./pages/POW";
+import { onBoardUser } from "./lib/utils";
+import Hire from "./pages/Hire";
 
 // @ts-ignore
 window.Buffer = Buffer;
@@ -27,10 +29,6 @@ function App() {
   if (wallet) {
     ethersProvider = new ethers.BrowserProvider(wallet.provider, "any");
   }
-  useEffect(() => {
-    getUP();
-    // uploadData();
-  }, [wallet]);
 
   const getUP = async () => {
     if (wallet?.accounts[0].address && !UP) {
@@ -49,7 +47,11 @@ function App() {
       setUP(profileMetaData.value?.LSP3Profile);
       //@ts-ignore
       setAddress(wallet?.accounts[0].address);
-
+      await onBoardUser(
+        wallet?.accounts[0].address,
+        //@ts-ignore
+        profileMetaData.value?.LSP3Profile
+      );
       console.log({
         //@ts-ignore
         UP: profileMetaData.value?.LSP3Profile,
@@ -57,6 +59,10 @@ function App() {
       });
     }
   };
+  useEffect(() => {
+    getUP();
+    // uploadData();
+  }, [wallet]);
 
   return (
     <div className="App dark">
@@ -70,7 +76,6 @@ function App() {
       />
 
       <div className="mt-[80px]">
-        <h1 className="mt-8 text-white">{address}</h1>
         <Route path="/">
           <Home UP={UP} />
         </Route>
@@ -80,7 +85,9 @@ function App() {
         <Route path="/bounty/:id">
           <Bounty UP={UP} />
         </Route>
-
+        <Route path="/hire">
+          <Hire UP={UP} />
+        </Route>
         <Route path="/pow/:id">
           <POW />
         </Route>

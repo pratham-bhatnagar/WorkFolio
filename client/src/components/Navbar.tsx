@@ -29,9 +29,11 @@ function Nav(props: any) {
             className="mr-[10px] h-[30px] sm:visible"
           />{" "}
         </a>
-        <h1 className=" gradient marginlogo text-2xl text-brandGreen font-semibold cal-font">
-          WorkFolio
-        </h1>{" "}
+        <Link href="/">
+          <h1 className=" gradient marginlogo text-2xl text-brandGreen  font-semibold cal-font">
+            WorkFolio
+          </h1>{" "}
+        </Link>
       </div>
       <div className=""></div>
       <div className=""></div>
@@ -41,7 +43,7 @@ function Nav(props: any) {
             <GrMoney /> Bounties
           </li>
         </ActiveLink>
-        <ActiveLink href="/pow">
+        <ActiveLink href="/hire">
           <li className="cursor-pointer hover:text-brandGreen flex gap-2 text-lg cal-font items-center">
             <MdPersonSearch /> Hire
             {/* <MdWorkspacePremium /> Hire */}

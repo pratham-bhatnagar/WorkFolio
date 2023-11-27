@@ -2,6 +2,7 @@ import Button from "../components/Button";
 import { GrMoney, GrTicket } from "react-icons/gr";
 import { FaPeopleGroup } from "react-icons/fa6";
 import { MdPersonSearch } from "react-icons/md";
+import { Link } from "wouter";
 
 export default function Home(props: any) {
   return (
