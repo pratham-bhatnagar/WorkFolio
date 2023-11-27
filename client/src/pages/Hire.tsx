@@ -32,62 +32,7 @@ function Hire(props: any) {
             {data.map((profile: any) => {
               const { address, UP } = profile;
               const universalProfile = JSON.parse(UP);
-              console.log({ universalProfile });
-              return (
-                <Link href={`/pow/${address}`}>
-                  <div className="bg-zinc-800 cursor-pointer flex-col p-2 flex justify-center rounded">
-                    <ProfilePic address={address} UP={universalProfile} />
-                    <h1 className="text-[24px] pt-2 text-brandGreen">
-                      @{universalProfile?.name}
-                    </h1>
-                    <h2 className="text-[14px] text-gray-400 roboto font-medium text-ellipsis ">
-                      {universalProfile?.description}
-                    </h2>
-                  </div>
-                </Link>
-              );
-            })}
-            {data.map((profile: any) => {
-              const { address, UP } = profile;
-              const universalProfile = JSON.parse(UP);
-              console.log({ universalProfile });
-              return (
-                <Link href={`/pow/${address}`}>
-                  <div className="bg-zinc-800 cursor-pointer flex-col p-2 flex justify-center rounded">
-                    <ProfilePic address={address} UP={universalProfile} />
-                    <h1 className="text-[24px] pt-2 text-brandGreen">
-                      @{universalProfile?.name}
-                    </h1>
-                    <h2 className="text-[14px] text-gray-400 roboto font-medium text-ellipsis ">
-                      {universalProfile?.description}
-                    </h2>
-                  </div>
-                </Link>
-              );
-            })}
-            {data.map((profile: any) => {
-              const { address, UP } = profile;
-              const universalProfile = JSON.parse(UP);
-              console.log({ universalProfile });
-              return (
-                <Link href={`/pow/${address}`}>
-                  <div className="bg-zinc-800 cursor-pointer flex-col p-2 flex justify-center rounded">
-                    <ProfilePic address={address} UP={universalProfile} />
-                    <h1 className="text-[24px] pt-2 text-brandGreen">
-                      @{universalProfile?.name}
-                    </h1>
-                    <h2 className="text-[14px] text-gray-400 roboto font-medium text-ellipsis ">
-                      {universalProfile?.description}
-                    </h2>
-                  </div>
-                </Link>
-              );
-            })}
-
-            {data.map((profile: any) => {
-              const { address, UP } = profile;
-              const universalProfile = JSON.parse(UP);
-              console.log({ universalProfile });
+              //   console.log({ universalProfile });
               return (
                 <Link href={`/pow/${address}`}>
                   <div className="bg-zinc-800 cursor-pointer flex-col p-2 flex justify-center rounded">

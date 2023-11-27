@@ -21,6 +21,7 @@ function BountiesPage(props: any) {
   };
   useEffect(() => {
     fetchBounties();
+    console.log(bounties);
   }, []);
   return (
     <div className="max-w-[80vw] mx-auto">
@@ -29,7 +30,10 @@ function BountiesPage(props: any) {
           closeOnOutsideClick={true}
           closeModal={() => setBountyModal(false)}
         >
-          <CreateBounty closeModal={() => setBountyModal(false)} />
+          <CreateBounty
+            closeModal={() => setBountyModal(false)}
+            wallet={props.wallet}
+          />
         </Modal>
       )}
       <div className="flex flex-row justify-between">
@@ -57,7 +61,7 @@ function BountiesPage(props: any) {
         </div>
       </div>
       <div className="grid gap-4 mt-[3rem]">
-        {bounties.length ? (
+        {bounties?.length ? (
           <>
             {bounties.map((bounty, i) => (
               <BountyCard bounty={bounty} key={i} />
@@ -71,7 +75,7 @@ function BountiesPage(props: any) {
   );
 }
 
-const BountyCard = (props: any) => {
+export const BountyCard = (props: any) => {
   const { bounty } = props;
   return (
     <Link href={`/bounty/${bounty.id}`}>
@@ -89,43 +93,8 @@ const BountyCard = (props: any) => {
             <p className="text-gray-500">Project | Rolling Deadline</p>
           </div>
         </div>
-        <div className="text-white">
-          {!bounty.applicants.length ? (
-            "No applicants"
-          ) : (
-            <>
-              {" "}
-              {bounty.applicants.length > 1 ? (
-                <>
-                  <span className="flex items-center gap-1">
-                    <div className="flex items-center -space-x-2 pointer-events-none">
-                      <Avvvatars
-                        value={`${bounty.applicants?.[0]}random`}
-                        style={"shape"}
-                        size={25}
-                      />{" "}
-                      <Avvvatars
-                        value={`${bounty.applicants?.[0]}addr`}
-                        style={"shape"}
-                        size={25}
-                      />
-                      <a
-                        className="flex items-center justify-center w-[30px] h-[30px] text-lg font-medium text-white bg-brandGreen rounded-full "
-                        href="#"
-                      >
-                        {bounty.applicants.length + 1}
-                      </a>
-                    </div>{" "}
-                    Submissions
-                  </span>
-                </>
-              ) : (
-                "1 Submission"
-              )}
-            </>
-          )}
-        </div>
-        <span className="font-bold text-brandGreen">{bounty.prize} LYX</span>
+        <div className="text-white"></div>
+        {/* <span className="font-bold text-brandGreen">{bounty.prize} LYX</span> */}
       </div>
     </Link>
   );

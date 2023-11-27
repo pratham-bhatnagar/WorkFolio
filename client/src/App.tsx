@@ -19,7 +19,6 @@ import { ClaimWinnerNFT, CreateBounty, uploadData } from "./lib/lukso";
 // @ts-ignore
 window.Buffer = Buffer;
 
-
 function App() {
   const [loading, setLoading] = useState(false);
   const [{ wallet, connecting }, connect, disconnect] = useConnectWallet();
@@ -70,62 +69,39 @@ function App() {
       <Navbar
         UP={UP}
         address={address}
-        connecting={connecting}
         wallet={wallet}
+        connecting={connecting}
         connectWalletOnClick={() => (wallet ? disconnect(wallet) : connect())}
       />
 
       <div className="mt-[80px]">
+        {/* <div className="flex gap-4"> */}
 
-        <div className="flex gap-4">
-        <button
-          onClick={() => {
-            console.log('here')
-            setLoading(true);
-            CreateBounty(wallet,"Make OF video","make a OF video everyday");
-            setLoading(false);
-          }}
-        >
-          {loading ? "loading.." : "Create Bounty"}
-        </button>
-
-        <button 
-          onClick={() => {
-            console.log('here')
-            setLoading(true);
-            uploadData("pratham-bhatnagar",wallet)
-            setLoading(false);
-          }}
-        >
-          {loading ? "loading.." : "setgithub"}
-        </button>
-
-        <button
-          onClick={() => {
-            console.log('here')
-            setLoading(true);
-            ClaimWinnerNFT(wallet,"Winner of Clit Slitter")
-            setLoading(false);
-          }}
-        >
-          {loading ? "loading.." : "claim winner nft"}
-        </button>
-
-        </div>
+        {/* <button
+            onClick={() => {
+              console.log("here");
+              setLoading(true);
+              uploadData("pratham-bhatnagar", wallet);
+              setLoading(false);
+            }}
+          >
+            {loading ? "loading.." : "setgithub"}
+          </button> */}
+        {/* </div> */}
         <Route path="/">
-          <Home UP={UP} />
+          <Home UP={UP} address={address} wallet={wallet} />
         </Route>
         <Route path="/bounty">
-          <Bouties UP={UP} />
+          <Bouties UP={UP} address={address} wallet={wallet} />
         </Route>
         <Route path="/bounty/:id">
-          <Bounty UP={UP} />
+          <Bounty UP={UP} address={address} wallet={wallet} />
         </Route>
         <Route path="/hire">
-          <Hire UP={UP} />
+          <Hire UP={UP} address={address} wallet={wallet} />
         </Route>
         <Route path="/pow/:id">
-          <POW />
+          <POW UP={UP} address={address} wallet={wallet} />
         </Route>
       </div>
     </div>

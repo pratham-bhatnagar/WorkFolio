@@ -4,14 +4,15 @@ import { Card } from "./ui/Card";
 import Button from "./Button";
 import toast from "react-hot-toast";
 import supabase from "../services/supabase";
+import { CreateBounty } from "../lib/lukso";
 
-function CreateBounty(props: any) {
+function CreateBountyModal(props: any) {
   const [value, setValue] = React.useState<string>();
   const [title, setTitle] = useState<string>();
   const [prize, setPrize] = useState<number>(0);
   const [Base64Image, setBase64Image] = useState<string | undefined>();
 
-  const submitHandler = async () => {
+  const submitHandler = async (wallet: any) => {
     console.log("yes");
     if (!title || !value || !Base64Image || !prize) {
       console.log("error incomplete fileds");
@@ -35,6 +36,7 @@ function CreateBounty(props: any) {
       console.log("Error creating event", error);
       toast.error("Something went wrong!");
     }
+    CreateBounty(wallet, title!, title!);
     toast.success("Bounty Created!");
     props?.closeModal();
   };
@@ -115,11 +117,12 @@ function CreateBounty(props: any) {
               placeholder="2"
               required
             />
+
             <Button
               type="button"
               mode="green"
               className="rounded-l-none"
-              onClick={() => submitHandler()}
+              onClick={() => submitHandler(props.wallet)}
             >
               <div className="flex flex-row gap-[10px] items-center ">
                 <p className="text-brandGrey font-semibold ">Mint Bounty</p>
@@ -132,4 +135,4 @@ function CreateBounty(props: any) {
   );
 }
 
-export default CreateBounty;
+export default CreateBountyModal;

@@ -9,7 +9,8 @@ import { GiReceiveMoney } from "react-icons/gi";
 import { FaUserPlus } from "react-icons/fa6";
 import MDEditor from "@uiw/react-md-editor";
 import React from "react";
-import { getBounties } from "../lib/utils";
+import { getBounties, setBountiesForUser, setBountyWinner } from "../lib/utils";
+import { ClaimWinnerNFT, getUP } from "../lib/lukso";
 
 // title,
 // prize,
@@ -24,13 +25,28 @@ import { getBounties } from "../lib/utils";
 function Bounty(props: any) {
   const [match, params] = useRoute("/bounty/:id");
   const [bounty, setBounty] = useState<any>(null);
+  const [winner, setWinner] = useState<any>(null);
+  const [winner2, setWinner2] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
   const fetchbounty = async () => {
     const data = await getBounties(params!.id);
     setBounty(data?.[0]);
   };
+  const winnerLogic = async () => {
+    if (bounty?.winner) {
+      const data = await getUP(bounty?.winner);
+      setWinner(data);
+    }
+  };
+  const submitHandler = () => {
+    setBountyWinner(winner2, bounty?.id);
+  };
   useEffect(() => {
     fetchbounty();
   }, []);
+  useEffect(() => {
+    winnerLogic();
+  }, [bounty]);
   const [submissionMarkdown, setSubmissionMarkdown] = React.useState<string>();
   //todo fetch UP username here -> for creator
   return (
@@ -56,9 +72,9 @@ function Bounty(props: any) {
                 </p>
               </div>
             </div>
-            <div className=" border-brandGreen text-2xl text-brandGreen rounded-full flex items-center justify-center">
+            {/* <div className=" border-brandGreen text-2xl text-brandGreen rounded-full flex items-center justify-center">
               {bounty?.prize} LYX
-            </div>
+            </div> */}
           </div>
 
           <div className=" mt-2 mx-4 max-h-[50vh] overflow-y-scroll border-b-[1px] border-gray-700 pb-4">
@@ -112,7 +128,7 @@ function Bounty(props: any) {
             </ReactMarkdown>
           </div>
           {/* todo if winner address is user address show claim otherwise just show winners */}
-          {!bounty?.winner ? (
+          {bounty?.winner ? (
             <div className="winner w-[30vw] mx-auto my-3 p-5 rounded-3xl">
               <h1 className="font-bold text-zinc-800 text-2xl  ">
                 🎉 Winners Announced
@@ -120,34 +136,39 @@ function Bounty(props: any) {
               <div className="flex gap-4 justify-center items-center mt-4">
                 <Avvvatars value={`bounty?.winner`} size={50} />{" "}
                 <h1 className="text-zinc-800 text-xl">
-                  You won {bounty?.prize} LYX
+                  {props.address === bounty?.winner ? "You" : winner?.name} won{" "}
+                  {bounty?.prize} LYX
                 </h1>
               </div>
-              <div className=" flex justify-around my-2 mt-8">
-                <Button type="button" mode="dark">
-                  <div className="flex flex-row gap-[10px] items-center ">
-                    <GiReceiveMoney
-                      className="text-brandGreen h-[16px]"
-                      height={16}
-                    />{" "}
-                    <p className="text-brandGreen font-semibold cal-font">
-                      Claim your bounty
-                    </p>
-                  </div>
-                </Button>
-
-                <Button type="button" mode="dark">
-                  <div className="flex flex-row gap-[10px] items-center ">
-                    <FaUserPlus
-                      className="text-brandGreen h-[16px]"
-                      height={16}
-                    />{" "}
-                    <p className="text-brandGreen font-semibold cal-font">
-                      Add Proof Of Work to profile
-                    </p>
-                  </div>
-                </Button>
-              </div>
+              {/* {props.address}
+              {bounty.winner} */}
+              {props.address === bounty?.winner && (
+                <div className=" flex justify-around my-2 mt-8">
+                  <Button
+                    type="button"
+                    mode="dark"
+                    onClick={async () => {
+                      console.log("here");
+                      setLoading(true);
+                      // ClaimWinnerNFT(props.wallet, `Winner of ${bounty.name}`);
+                      setLoading(false);
+                      setBountiesForUser(bounty, props.address);
+                    }}
+                  >
+                    <div className="flex flex-row gap-[10px] items-center ">
+                      <GiReceiveMoney
+                        className="text-brandGreen h-[16px]"
+                        height={16}
+                      />{" "}
+                      <p className="text-brandGreen font-semibold cal-font">
+                        {loading
+                          ? "Adding to POW profile.."
+                          : "Claim Bounty NFT"}
+                      </p>
+                    </div>
+                  </Button>
+                </div>
+              )}
             </div>
           ) : (
             <div className="mx-4">
@@ -218,6 +239,32 @@ function Bounty(props: any) {
           )}
 
           {/* submisison ui */}
+          {props.address === bounty?.creator && (
+            <>
+              <div className="flex w-full">
+                <input
+                  value={winner}
+                  onChange={(e) => setWinner2(e.target.value)}
+                  type="text"
+                  id="title"
+                  className="bg-neutral-800 border rounded-r-none border-r-0 border-gray-600 text-white text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="Winner address"
+                  required
+                />
+                <Button
+                  type="button"
+                  mode="green"
+                  className="rounded-l-none"
+                  onClick={() => submitHandler()}
+                >
+                  <div className="flex flex-row gap-[10px] items-center ">
+                    <p className="text-brandGrey font-semibold ">Mint Bounty</p>
+                  </div>
+                </Button>
+              </div>
+              <></>
+            </>
+          )}
         </>
       )}
     </div>
