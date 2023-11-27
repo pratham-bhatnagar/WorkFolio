@@ -12,7 +12,7 @@ import { MdAttachMoney } from "react-icons/md";
 import Web3 from "web3";
 //@ts-ignore
 const web3 = new Web3(window.lukso);
-function POW() {
+function POW(props:any) {
   const [match, params] = useRoute("/pow/:id");
   const [UP, setUp] = useState<any>();
   const fetchProfile = async () => {
