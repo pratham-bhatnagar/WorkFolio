@@ -5,6 +5,7 @@ import { MdWorkspacePremium } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
 import { Link, useRoute } from "wouter";
 import { ProfilePic } from "./ProfilePic";
+import { MdPersonSearch } from "react-icons/md";
 
 export const ActiveLink = (props: any) => {
   const [isActive] = useRoute(props.href);
@@ -29,7 +30,7 @@ function Nav(props: any) {
           />{" "}
         </a>
         <h1 className=" gradient marginlogo text-2xl text-brandGreen font-semibold cal-font">
-          LaunchPad
+          WorkFolio
         </h1>{" "}
       </div>
       <div className=""></div>
@@ -42,7 +43,8 @@ function Nav(props: any) {
         </ActiveLink>
         <ActiveLink href="/pow">
           <li className="cursor-pointer hover:text-brandGreen flex gap-2 text-lg cal-font items-center">
-            <MdWorkspacePremium /> Proof Of Work
+            <MdPersonSearch /> Hire
+            {/* <MdWorkspacePremium /> Hire */}
           </li>
         </ActiveLink>
         {props.UP && (

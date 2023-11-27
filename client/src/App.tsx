@@ -15,7 +15,7 @@ import Bounty from "./pages/Bounty";
 import { Buffer } from "buffer";
 import Avvvatars from "avvvatars-react";
 import POW from "./pages/POW";
-import { uploadData } from "./lib/lukso";
+
 // @ts-ignore
 window.Buffer = Buffer;
 
@@ -29,7 +29,7 @@ function App() {
   }
   useEffect(() => {
     getUP();
-    uploadData();
+    // uploadData();
   }, [wallet]);
 
   const getUP = async () => {

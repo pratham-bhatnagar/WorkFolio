@@ -211,7 +211,7 @@ function Bounty(props: any) {
                   <Button type="button" mode="green" className="rounded-l-none">
                     <div className="flex flex-row gap-[10px] items-center ">
                       <p className="text-brandGrey font-semibold ">
-                        Submit now
+                        Apply using your Proof of Work
                       </p>
                     </div>
                   </Button>
